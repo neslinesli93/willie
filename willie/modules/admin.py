@@ -26,7 +26,7 @@ def configure(config):
 
 @willie.module.commands('join')
 @willie.module.priority('low')
-@willie.module.example('.join #example or .join #example key')
+@willie.module.example('.join #channel o .join #channel key')
 def join(bot, trigger):
     """Join the specified channel. This is an admin-only command."""
     # Can only be done in privmsg by an admin
@@ -45,7 +45,7 @@ def join(bot, trigger):
 
 @willie.module.commands('part')
 @willie.module.priority('low')
-@willie.module.example('.part #example')
+@willie.module.example('.part #channel')
 def part(bot, trigger):
     """Part the specified channel. This is an admin-only command."""
     # Can only be done in privmsg by an admin
@@ -80,7 +80,7 @@ def quit(bot, trigger):
 
 @willie.module.commands('msg')
 @willie.module.priority('low')
-@willie.module.example('.msg #YourPants Does anyone else smell neurotoxin?')
+@willie.module.example('.msg #channel/@nick Ciao')
 def msg(bot, trigger):
     """
     Send a message to a given channel or nick. Can only be done in privmsg by an

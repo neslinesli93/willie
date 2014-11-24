@@ -31,14 +31,14 @@ else:
 def c(bot, trigger):
     """Evaluate some calculation."""
     if not trigger.group(2):
-        return bot.reply("Nothing to calculate.")
+        return bot.reply("Niente da calcolare")
     # Account for the silly non-Anglophones and their silly radix point.
     eqn = trigger.group(2).replace(',', '.')
     try:
         result = eval_equation(eqn)
         result = "{:.10g}".format(result)
     except ZeroDivisionError:
-        result = "Division by zero is not supported in this universe."
+        result = "La divisione per zero non e' supportata in questo Universo."
     except Exception as e:
         result = "{error}: {msg}".format(error=type(e), msg=e)
     bot.reply(result)
@@ -49,7 +49,7 @@ def c(bot, trigger):
 def py(bot, trigger):
     """Evaluate a Python expression."""
     if not trigger.group(2):
-        return bot.say("Need an expression to evaluate")
+        return bot.say("Serve un'espressione da valutare")
 
     query = trigger.group(2)
     uri = 'http://tumbolia.appspot.com/py/'
@@ -57,7 +57,7 @@ def py(bot, trigger):
     if answer:
         bot.say(answer)
     else:
-        bot.reply('Sorry, no result.')
+        bot.reply('Nessun risultato, mi spiace')
 
 
 @commands('wa', 'wolfram')
@@ -66,14 +66,14 @@ def py(bot, trigger):
 def wa(bot, trigger):
     """Wolfram Alpha calculator"""
     if not trigger.group(2):
-        return bot.reply("No search term.")
+        return bot.reply("Nessun termine da cercare")
     query = trigger.group(2)
     uri = 'http://tumbolia.appspot.com/wa/'
     try:
         answer = web.get(uri + web.quote(query.replace('+', 'plus')), 45,
                          dont_decode=True)
     except timeout as e:
-        return bot.say('[WOLFRAM ERROR] Request timed out')
+        return bot.say("[WOLFRAM ERROR] La richiesta e' scaduta")
     if answer:
         answer = answer.decode('unicode_escape')
         answer = HTMLParser.HTMLParser().unescape(answer)
@@ -89,7 +89,7 @@ def wa(bot, trigger):
         if(len(waOutputArray) < 2):
             if(answer.strip() == "Couldn't grab results from json stringified precioussss."):
                 # Answer isn't given in an IRC-able format, just link to it.
-                bot.say('[WOLFRAM]Couldn\'t display answer, try http://www.wolframalpha.com/input/?i=' + query.replace(' ', '+'))
+                bot.say('[WOLFRAM]Errore, prova http://www.wolframalpha.com/input/?i=' + query.replace(' ', '+'))
             else:
                 bot.say('[WOLFRAM ERROR]' + answer)
         else:
@@ -98,7 +98,7 @@ def wa(bot, trigger):
                     + waOutputArray[1])
         waOutputArray = []
     else:
-        bot.reply('Sorry, no result.')
+        bot.reply('Nessun risultato, mi spiace')
 
 
 if __name__ == "__main__":

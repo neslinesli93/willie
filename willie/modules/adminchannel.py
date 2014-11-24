@@ -17,7 +17,7 @@ from willie.tools import Nick
 
 
 def default_mask(trigger):
-    welcome = formatting.color('Welcome to:', formatting.colors.PURPLE)
+    welcome = formatting.color('Benvenuto su:', formatting.colors.PURPLE)
     chan = formatting.color(trigger.sender, formatting.colors.TEAL)
     topic_ = formatting.bold('Topic:')
     topic_ = formatting.color('| ' + topic_, formatting.colors.PURPLE)
@@ -40,7 +40,7 @@ def op(bot, trigger):
     if bot.privileges[trigger.sender][trigger.nick] < OP:
         return
     if bot.privileges[trigger.sender][bot.nick] < OP:
-        return bot.reply("I'm not a channel operator!")
+        return bot.reply("Non sono OP :(")
     nick = trigger.group(2)
     channel = trigger.sender
     if not nick:
@@ -57,7 +57,7 @@ def deop(bot, trigger):
     if bot.privileges[trigger.sender][trigger.nick] < OP:
         return
     if bot.privileges[trigger.sender][bot.nick] < OP:
-        return bot.reply("I'm not a channel operator!")
+        return bot.reply("Non sono OP :(")
     nick = trigger.group(2)
     channel = trigger.sender
     if not nick:
@@ -74,7 +74,7 @@ def voice(bot, trigger):
     if bot.privileges[trigger.sender][trigger.nick] < OP:
         return
     if bot.privileges[trigger.sender][bot.nick] < HALFOP:
-        return bot.reply("I'm not a channel operator!")
+        return bot.reply("Non sono OP :(")
     nick = trigger.group(2)
     channel = trigger.sender
     if not nick:
@@ -91,7 +91,7 @@ def devoice(bot, trigger):
     if bot.privileges[trigger.sender][trigger.nick] < OP:
         return
     if bot.privileges[trigger.sender][bot.nick] < HALFOP:
-        return bot.reply("I'm not a channel operator!")
+        return bot.reply("Non sono OP :(")
     nick = trigger.group(2)
     channel = trigger.sender
     if not nick:
@@ -108,7 +108,7 @@ def kick(bot, trigger):
     if bot.privileges[trigger.sender][trigger.nick] < OP:
         return
     if bot.privileges[trigger.sender][bot.nick] < HALFOP:
-        return bot.reply("I'm not a channel operator!")
+        return bot.reply("Non sono OP :(")
     text = trigger.group().split()
     argc = len(text)
     if argc < 2:
@@ -160,7 +160,7 @@ def ban(bot, trigger):
     if bot.privileges[trigger.sender][trigger.nick] < OP:
         return
     if bot.privileges[trigger.sender][bot.nick] < HALFOP:
-        return bot.reply("I'm not a channel operator!")
+        return bot.reply("Non sono OP :(")
     text = trigger.group().split()
     argc = len(text)
     if argc < 2:
@@ -188,7 +188,7 @@ def unban(bot, trigger):
     if bot.privileges[trigger.sender][trigger.nick] < OP:
         return
     if bot.privileges[trigger.sender][bot.nick] < HALFOP:
-        return bot.reply("I'm not a channel operator!")
+        return bot.reply("Non sono OP :(")
     text = trigger.group().split()
     argc = len(text)
     if argc < 2:
@@ -216,7 +216,7 @@ def quiet(bot, trigger):
     if bot.privileges[trigger.sender][trigger.nick] < OP:
         return
     if bot.privileges[trigger.sender][bot.nick] < OP:
-        return bot.reply("I'm not a channel operator!")
+        return bot.reply("Non sono OP :(")
     text = trigger.group().split()
     argc = len(text)
     if argc < 2:
@@ -244,7 +244,7 @@ def unquiet(bot, trigger):
     if bot.privileges[trigger.sender][trigger.nick] < OP:
         return
     if bot.privileges[trigger.sender][bot.nick] < OP:
-        return bot.reply("I'm not a channel operator!")
+        return bot.reply("Non sono OP :(")
     text = trigger.group().split()
     argc = len(text)
     if argc < 2:
@@ -274,7 +274,7 @@ def kickban(bot, trigger):
     if bot.privileges[trigger.sender][trigger.nick] < OP:
         return
     if bot.privileges[trigger.sender][bot.nick] < HALFOP:
-        return bot.reply("I'm not a channel operator!")
+        return bot.reply("Non sono OP :(")
     text = trigger.group().split()
     argc = len(text)
     if argc < 4:
@@ -308,7 +308,7 @@ def topic(bot, trigger):
     if bot.privileges[trigger.sender][trigger.nick] < OP:
         return
     if bot.privileges[trigger.sender][bot.nick] < HALFOP:
-        return bot.reply("I'm not a channel operator!")
+        return bot.reply("Non sono OP :(")
     if not trigger.group(2):
         return
     channel = trigger.sender.lower()
@@ -327,7 +327,7 @@ def topic(bot, trigger):
         args = top.split('~', narg)
 
     if len(args) != narg:
-        message = "Not enough arguments. You gave {}, it requires {}.".format(
+        message = "Numero di parametri scorretto. Ne hai dati {} anziche' {}.".format(
             len(args), narg)
         return bot.say(message)
     topic = mask.format(*args)
@@ -344,10 +344,10 @@ def set_mask(bot, trigger):
     if bot.privileges[trigger.sender][trigger.nick] < OP:
         return
     if not bot.db:
-        bot.say("I'm afraid I can't do that.")
+        bot.say("Non posso farlo")
     else:
         bot.db.preferences.update(trigger.sender.lower(), {'topic_mask': trigger.group(2)})
-        bot.say("Gotcha, " + trigger.nick)
+        bot.say("HA, " + trigger.nick)
 
 
 @commands('showmask')
@@ -356,7 +356,7 @@ def show_mask(bot, trigger):
     if bot.privileges[trigger.sender][trigger.nick] < OP:
         return
     if not bot.db:
-        bot.say("I'm afraid I can't do that.")
+        bot.say("Non posso farlo")
     elif trigger.sender.lower() in bot.db.preferences:
         bot.say(bot.db.preferences.get(trigger.sender.lower(), 'topic_mask'))
     else:
