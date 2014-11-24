@@ -126,10 +126,10 @@ def get_wind(parsed):
     return description + ' ' + str(m_s) + 'm/s (' + degrees + ')'
 
 
-@commands('weather', 'wea')
-@example('.weather London')
+@commands('tempo')
+@example('.tempo London')
 def weather(bot, trigger):
-    """.weather location - Show the weather at the given location."""
+    """.tempo location - Show the weather at the given location."""
 
     location = trigger.group(2)
     woeid = ''
@@ -137,8 +137,8 @@ def weather(bot, trigger):
         if bot.db and trigger.nick in bot.db.preferences:
             woeid = bot.db.preferences.get(trigger.nick, 'woeid')
         if not woeid:
-            return bot.msg(trigger.sender, "I don't know where you live. " +
-                           'Give me a location, like .weather London, or tell me where you live by saying .setlocation London, for example.')
+            return bot.msg(trigger.sender, "Non so dove vivi. " +
+                           'Dammi un comando, tipo .tempo Rome, o dimmi dove vivi con .setlocation Rome, ad esempio.')
     else:
         location = location.strip()
         if bot.db and location in bot.db.preferences:
@@ -149,7 +149,7 @@ def weather(bot, trigger):
                 woeid = first_result.find('woeid').text
 
     if not woeid:
-        return bot.reply("I don't know where that is.")
+        return bot.reply("Non so dove sia questo posto")
 
     query = web.urlencode({'w': woeid, 'u': 'c'})
     url = 'http://weather.yahooapis.com/forecastrss?' + query
@@ -168,13 +168,13 @@ def weather(bot, trigger):
 def update_woeid(bot, trigger):
     """Set your default weather location."""
     if not trigger.group(2):
-        bot.reply('Give me a location, like "Washington, DC" or "London".')
+        bot.reply("Dammi una citta', come 'Washington, DC' o 'Rome'.")
         return NOLIMIT
 
     if bot.db:
         first_result = woeid_search(trigger.group(2))
         if first_result is None:
-            return bot.reply("I don't know where that is.")
+            return bot.reply("Non so dove sia questo posto")
 
         woeid = first_result.find('woeid').text
 
@@ -187,7 +187,7 @@ def update_woeid(bot, trigger):
         state = first_result.find('state').text or ''
         country = first_result.find('country').text or ''
         uzip = first_result.find('uzip').text or ''
-        bot.reply('I now have you at WOEID %s (%s %s, %s, %s %s.)' %
+        bot.reply('Non ho il tuo WOEID %s (%s %s, %s, %s %s.)' %
                   (woeid, neighborhood, city, state, country, uzip))
     else:
-        bot.reply("I can't remember that; I don't have a database.")
+        bot.reply("Non mi ricordo, non ho un database.")
