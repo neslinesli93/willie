@@ -1,4 +1,5 @@
 # coding=utf8
+
 """
 announce.py - Send a message to all channels
 Copyright © 2013, Elad Alfassa, <elad@fedoraproject.org>
