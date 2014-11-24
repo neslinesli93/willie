@@ -133,14 +133,14 @@ def _roll_dice(bot, dice_expression):
 
     # Dice can't have zero or a negative number of sides.
     if dice_type <= 0:
-        bot.reply("I don't have any dice with %d sides. =(" % dice_type)
+        bot.reply("Non ho dadi con %d facce. =(" % dice_type)
         return None  # Signal there was a problem
 
     # Upper limit for dice should be at most a million. Creating a dict with
     # more than a million elements already takes a noticeable amount of time
     # on a fast computer and ~55kB of memory.
     if dice_num > 1000:
-        bot.reply('I only have 1000 dice. =(')
+        bot.reply('Ho solo 1000 dadi. =(')
         return None  # Signal there was a problem
 
     dice = DicePouch(dice_num, dice_type, 0)
@@ -156,13 +156,13 @@ def _roll_dice(bot, dice_expression):
 @willie.module.commands("dice")
 @willie.module.commands("d")
 @willie.module.priority("medium")
-@willie.module.example(".roll 3d1+1", 'You roll 3d1+1: (1+1+1)+1 = 4')
-@willie.module.example(".roll 3d1v2+1", 'You roll 3d1v2+1: (1[+1+1])+1 = 2')
-@willie.module.example(".roll 2d4", 'You roll 2d4: \(\d\+\d\) = \d', re=True)
+@willie.module.example(".roll 3d1+1", 'Tiri un 3d1+1: (1+1+1)+1 = 4')
+@willie.module.example(".roll 3d1v2+1", 'Tiri un 3d1v2+1: (1[+1+1])+1 = 2')
+@willie.module.example(".roll 2d4", 'Tiri un 2d4: \(\d\+\d\) = \d', re=True)
 @willie.module.example(".roll 100d1", '[^:]*: \(100x1\) = 100', re=True)
-@willie.module.example(".roll 1001d1", 'I only have 1000 dice. =(')
-@willie.module.example(".roll 1d1 + 1d1", 'You roll 1d1 + 1d1: (1) + (1) = 2')
-@willie.module.example(".roll 1d1+1d1", 'You roll 1d1+1d1: (1)+(1) = 2')
+@willie.module.example(".roll 1001d1", 'Ho solo 1000 dadi =(')
+@willie.module.example(".roll 1d1 + 1d1", 'Tiri un 1d1 + 1d1: (1) + (1) = 2')
+@willie.module.example(".roll 1d1+1d1", 'Tiri un 1d1+1d1: (1)+(1) = 2')
 def roll(bot, trigger):
     """.dice XdY[vZ][+N], rolls dice and reports the result.
 
@@ -178,7 +178,7 @@ def roll(bot, trigger):
     # expressions in the original string with the results. Replacing is done
     # using string formatting, so %-characters must be escaped.
     if not trigger.group(2):
-        return bot.reply("No dice to roll.")
+        return bot.reply("Scrivi un dado.")
     arg_str = trigger.group(2)
     dice_expressions = re.findall(dice_regexp, arg_str)
     arg_str = arg_str.replace("%", "%%")
@@ -213,7 +213,7 @@ def roll(bot, trigger):
         bot.reply("SyntaxError, eval(%s), %s" % (eval_str, e))
         return
 
-    bot.reply("You roll %s: %s = %d" % (
+    bot.reply("Tiri un %s: %s = %d" % (
         trigger.group(2), pretty_str, result))
 
 
@@ -226,10 +226,10 @@ def choose(bot, trigger):
     .choice option1|option2|option3 - Makes a difficult choice easy.
     """
     if not trigger.group(2):
-        return bot.reply('I\'d choose an option, but you didn\'t give me any.')
+        return bot.reply("Sceglierei un'opzione, se tu me ne dessi qualcuna")
     choices = re.split('[\|\\\\\/]', trigger.group(2))
     pick = random.choice(choices)
-    return bot.reply('Your options: %s. My choice: %s' % (', '.join(choices), pick))
+    return bot.reply('Le tue opzioni: %s. La mia scelta: %s' % (', '.join(choices), pick))
 
 
 if __name__ == "__main__":
