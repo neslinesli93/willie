@@ -21,7 +21,7 @@ seen_dict = Ddict(dict)
 def seen(bot, trigger):
     """Reports when and where the user was last seen."""
     if not trigger.group(2):
-        bot.say(".seen <nick> - Reports when <nick> was last seen.")
+        bot.say(".seen <nick> - Scrive quando <nick> è stato visto l'ultima volta")
         return
     nick = Nick(trigger.group(2).strip())
     if nick in seen_dict:
@@ -35,10 +35,10 @@ def seen(bot, trigger):
         timestamp = format_time(bot.db, bot.config, tz, trigger.nick,
                                 trigger.sender, saw)
 
-        msg = "I last saw %s at %s on %s, saying %s" % (nick, timestamp, channel, message)
+        msg = "Ho visto %s per l'ultima volta %s su %s, e ha detto %s" % (nick, timestamp, channel, message)
         bot.say(str(trigger.nick) + ': ' + msg)
     else:
-        bot.say("Sorry, I haven't seen %s around." % nick)
+        bot.say("Mi spiace, non ho visto %s in giro." % nick)
 
 
 @rule('(.*)')
