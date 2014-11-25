@@ -444,7 +444,7 @@ class Bot(asynchat.async_chat):
 
     def msg(self, recipient, text, max_messages=1):
         # We're arbitrarily saying that the max is 400 bytes of text when
-        # messages will be split. Otherwise, we'd have to acocunt for the bot's
+        # messages will be split. Otherwise, we'd have to account for the bot's
         # hostmask, which is hard.
         max_text_length = 400
         # Encode to bytes, for propper length calculation

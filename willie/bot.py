@@ -727,14 +727,16 @@ class Willie(irc.Bot):
             timediff = time.time() - self.times[nick][func]
             if timediff < func.rate:
                 self.times[nick][func] = time.time()
-                self.debug(
-                    __file__,
-                    "%s prevented from using %s in %s: %d < %d" % (
-                        trigger.nick, func.__name__, trigger.sender,
-                        timediff, func.rate
-                    ),
-                    "verbose"
-                )
+                debug_msg = "Non puoi usare %s cosi velocemente, attendi %d secondi" %(
+                            func.__name__, func.rate - timediff)
+                self.msg(trigger.nick, debug_msg)
+                # self.debug(
+                #     __file__,
+                #     "%s, non puoi usare %s cosi velocemente. Attendi %d secondi" % (
+                #         trigger.nick, func.__name__, func.rate - timediff
+                #     ),
+                #     "verbose"
+                # )
                 return
 
         try:
@@ -862,7 +864,7 @@ class Willie(irc.Bot):
 
         if os.path.exists(tag):
             tag = os.path.relpath(tag, os.path.dirname(__file__))
-        debug_msg = "[%s] %s" % (tag, text)
+        debug_msg = "%s" % (text)
 
         output_on = {
             'verbose': ['verbose'],

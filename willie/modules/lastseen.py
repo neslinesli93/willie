@@ -1,6 +1,6 @@
 # coding=utf8
 """
-seen.py - Willie Seen Module
+lastseen.py - Willie Seen Module
 Copyright 2008, Sean B. Palmer, inamidst.com
 Copyright © 2012, Elad Alfassa <elad@fedoraproject.org>
 Licensed under the Eiffel Forum License 2.
