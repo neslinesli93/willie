@@ -16,9 +16,9 @@ from willie.module import commands, rule, priority
 
 seen_dict = Ddict(dict)
 
-@commands('lastseen')
+@commands('lastseen', 'seen')
 def seen(bot, trigger):
-    """Reports when and where the user was last seen."""
+    """Scrive quando e dove l'utente è stato visto per l'ultima volta"""
     if not trigger.group(2):
         bot.say(".seen <nick> - Scrive quando <nick> è stato visto l'ultima volta")
         return
