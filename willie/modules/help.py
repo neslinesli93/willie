@@ -30,7 +30,7 @@ def setup(bot=None):
 def help(bot, trigger):
     """Fa vedere la documentazione di un comando, e se c'è un esempio."""
     if not trigger.group(2):
-        bot.reply('Scrivi .help <comando> (ad esempio .help c) per avere info sul comando, o .commands per una lista di comandi.')
+        bot.reply('Scrivi .help <comando> (ad esempio .help c) per avere info sul comando, o .commands per una lista di tutti icomandi.')
     else:
         name = trigger.group(2)
         name = name.lower()
