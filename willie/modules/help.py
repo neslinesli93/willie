@@ -52,6 +52,8 @@ def help(bot, trigger):
                 msgfun(line)
             if bot.doc[name][1]:
                 msgfun('e.g. ' + bot.doc[name][1])
+        else:
+            bot.reply("Non conosco questo comando")
 
 
 @commands('commands')
