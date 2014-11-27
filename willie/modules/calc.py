@@ -29,7 +29,7 @@ else:
 @example('.c 5 // 2', '2')
 @example('.c 5 / 2', '2.5')
 def c(bot, trigger):
-    """Evaluate some calculation."""
+    """Esegue semplici calcoli."""
     if not trigger.group(2):
         return bot.reply("Niente da calcolare")
     # Account for the silly non-Anglophones and their silly radix point.
@@ -47,7 +47,7 @@ def c(bot, trigger):
 @commands('py')
 @example('.py len([1,2,3])', '3')
 def py(bot, trigger):
-    """Evaluate a Python expression."""
+    """Evaluta comando/i in Python."""
     if not trigger.group(2):
         return bot.say("Serve un'espressione da valutare")
 
@@ -64,7 +64,7 @@ def py(bot, trigger):
 @example('.wa sun mass / earth mass',
          '[WOLFRAM] M_sun\/M_earth  (solar mass per Earth mass) = 332948.6')
 def wa(bot, trigger):
-    """Wolfram Alpha calculator"""
+    """Interfaccia a Wolfram Alpha"""
     if not trigger.group(2):
         return bot.reply("Nessun termine da cercare")
     query = trigger.group(2)
@@ -89,7 +89,7 @@ def wa(bot, trigger):
         if(len(waOutputArray) < 2):
             if(answer.strip() == "Couldn't grab results from json stringified precioussss."):
                 # Answer isn't given in an IRC-able format, just link to it.
-                bot.say('[WOLFRAM]Errore, prova http://www.wolframalpha.com/input/?i=' + query.replace(' ', '+'))
+                bot.say('[WOLFRAM] Errore, prova http://www.wolframalpha.com/input/?i=' + query.replace(' ', '+'))
             else:
                 bot.say('[WOLFRAM ERROR]' + answer)
         else:
