@@ -28,7 +28,7 @@ def setup(bot=None):
 @commands('help')
 @priority('low')
 def help(bot, trigger):
-    """Shows a command's documentation, and possibly an example."""
+    """Fa vedere la documentazione di un comando, e se c'è un esempio."""
     if not trigger.group(2):
         bot.reply('Scrivi .help <comando> (ad esempio .help c) per avere info sul comando, o .commands per una lista di comandi.')
     else:
@@ -57,7 +57,7 @@ def help(bot, trigger):
 @commands('commands')
 @priority('low')
 def commands(bot, trigger):
-    """Return a list of bot's commands"""
+    """Ritorna la lista dei comandi supportati"""
     names = ', '.join(sorted(iterkeys(bot.doc)))
     if not trigger.is_privmsg:
         bot.reply("Ti sto mandando tutti i comandi in query")
