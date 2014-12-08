@@ -123,7 +123,7 @@ def kick(bot, trigger):
         nick = text[2]
         channel = opt
         reasonidx = 3
-    reason = ' '.join(text[reasonidx:])
+    reason = '_'.join(text[reasonidx:])
     if nick != bot.config.nick:
         bot.write(['KICK', channel, nick, reason])
 
