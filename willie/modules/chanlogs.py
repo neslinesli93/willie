@@ -13,9 +13,14 @@ import os.path
 import threading
 import sys
 from datetime import datetime
+import requests
+
 import willie.module
 import willie.tools
 from willie.config import ConfigurationError
+
+from pastebin_key import api_dev_key
+
 
 MESSAGE_TPL = "{datetime}  <{origin.nick}> {message}"
 ACTION_TPL = "{datetime}  * {origin.nick} {message}"
@@ -23,6 +28,8 @@ NICK_TPL = "{datetime}  *** {origin.nick} is now known as {origin.sender}"
 JOIN_TPL = "{datetime}  *** {origin.nick} has joined {trigger}"
 PART_TPL = "{datetime}  *** {origin.nick} has left {trigger}"
 QUIT_TPL = "{datetime}  *** {origin.nick} has quit IRC"
+
+PASTEBIN_URL = "http://pastebin.com/api/api_post.php"
 
 
 def configure(config):
@@ -174,3 +181,47 @@ def log_nick_change(bot, trigger):
             with bot.memory['chanlog_locks'][fpath]:
                 with open(fpath, "a") as f:
                     f.write(logline)
+
+
+@willie.module.commands('tail')
+def tail(bot, trigger):
+    n = trigger.group(2)
+    try:
+        n = int(n)
+    except Exception as e:
+        bot.reply("Uso: !tail 100")
+        return
+
+    if n <= 0:
+        bot.reply("Uso: !tail 100")
+        return
+
+    fpath = get_fpath(bot, channel=trigger.sender)
+    with bot.memory['chanlog_locks'][fpath]:
+        with open(fpath, "r") as f:
+            log = f.readlines()
+
+    if len(log) <= n:
+        post_data = log
+    else:
+        post_data = log[-n:]
+
+    payload = {'api_dev_key': api_dev_key,
+            'api_option': 'paste',
+            'api_paste_code': ''.join(post_data),
+            'api_paste_private': '2',
+            'api_paste_expire_date': '10M'
+            }
+
+    try:
+        r = requests.post(url=PASTEBIN_URL, data=payload)
+    except Exception as e:
+        bot.reply("Impossibile eseguire la richiesta")
+        return
+
+    # Hopefully pastebin only returns safe ascii strings
+    response = r.content.decode('ascii')
+    if "pastebin.com" in response:
+        bot.reply(response)
+    else:
+        bot.reply("Errore: {}".format(response))
