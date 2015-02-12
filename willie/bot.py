@@ -875,8 +875,6 @@ class Willie(irc.Bot):
         if level in output_on and verbosity in output_on[level]:
             if debug_target == 'stdio':
                 print(debug_msg)
-            elif debug_target == 'sender':
-                self.msg(sender, debug_msg)
             else:
                 self.msg(debug_target, debug_msg)
             return True
