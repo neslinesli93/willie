@@ -19,7 +19,7 @@ import willie.module
 import willie.tools
 from willie.config import ConfigurationError
 
-from pastebin_key import api_dev_key
+from willie.modules import pastebin_key
 
 
 MESSAGE_TPL = "{datetime}  <{origin.nick}> {message}"
@@ -206,7 +206,7 @@ def tail(bot, trigger):
     else:
         post_data = log[-n:]
 
-    payload = {'api_dev_key': api_dev_key,
+    payload = {'api_dev_key':pastebin_key. api_dev_key,
             'api_option': 'paste',
             'api_paste_code': ''.join(post_data),
             'api_paste_private': '2',
