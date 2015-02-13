@@ -185,6 +185,11 @@ def log_nick_change(bot, trigger):
 
 @willie.module.commands('tail')
 def tail(bot, trigger):
+    # TODO: Switch to fpaste!
+    # It seems pastebin allows google the indexing of private
+    # pastes, which also expire in 10 minutes.
+    return
+
     n = trigger.group(2)
     try:
         n = int(n)
